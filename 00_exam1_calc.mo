@@ -6,36 +6,36 @@
 
 // canister => akıllı sözleşme
 
-actor hesap_makinesi  {
-  
-  var hucre:Int = 0;
+actor hesap_makinesi {
 
-  // TOPLAMA  
-  public func toplama(s: Int) : async Int {
+  var hucre : Int = 0;
+
+  // TOPLAMA
+  public func toplama(s : Int) : async Int {
     hucre += s;
     hucre
     // (Debug.print(debug_show (hucre));)
   };
 
   // ÇIKARMA
-  public func cikarma(s: Int) : async Int {
+  public func cikarma(s : Int) : async Int {
     hucre -= s;
-    hucre
+    hucre;
   };
 
   // ÇARPMA
-  public func carpma(s: Int) : async Int {
+  public func carpma(s : Int) : async Int {
     hucre *= s;
-    hucre
+    hucre;
   };
 
   // BÖLME
-  public func bolme(s: Int) : async ?Int {
+  public func bolme(s : Int) : async ?Int {
     if (s == 0) {
-      null
-    }else{
+      null;
+    } else {
       hucre /= s;
-      ?hucre
+      ?hucre;
     };
   };
 

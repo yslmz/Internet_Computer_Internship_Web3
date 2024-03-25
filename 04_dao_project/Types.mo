@@ -25,12 +25,12 @@ module {
     message : Blob;
   };
   public type ProposalState = {
-      #failed : Text;
-      #open;
-      #executing;
-      #rejected;
-      #succeeded;
-      #accepted;
+    #failed : Text;
+    #open;
+    #executing;
+    #rejected;
+    #succeeded;
+    #accepted;
   };
   public type Tokens = { amount_e8s : Nat };
   public type TransferArgs = { to : Principal; amount : Tokens };
@@ -43,33 +43,39 @@ module {
   public type VoteArgs = { vote : Vote; proposal_id : Nat };
 
   public type SystemParams = {
-    transfer_fee: Tokens;
-    proposal_vote_threshold: Tokens;
-    proposal_submission_deposit: Tokens;
+    transfer_fee : Tokens;
+    proposal_vote_threshold : Tokens;
+    proposal_submission_deposit : Tokens;
   };
   public type BasicDaoStableStorage = {
-    accounts: [Account];
-    proposals: [Proposal];
-    system_params: SystemParams;
+    accounts : [Account];
+    proposals : [Proposal];
+    system_params : SystemParams;
   };
 
-  public func proposal_key(t: Nat) : Trie.Key<Nat> = { key = t; hash = Int.hash t };
-  public func account_key(t: Principal) : Trie.Key<Principal> = { key = t; hash = Principal.hash t };
-  public func accounts_fromArray(arr: [Account]) : Trie.Trie<Principal, Tokens> {
-      var s = Trie.empty<Principal, Tokens>();
-      for (account in arr.vals()) {
-          s := Trie.put(s, account_key(account.owner), Principal.equal, account.tokens).0;
-      };
-      s
+  public func proposal_key(t : Nat) : Trie.Key<Nat> = {
+    key = t;
+    hash = Int.hash t;
   };
-  public func proposals_fromArray(arr: [Proposal]) : Trie.Trie<Nat, Proposal> {
-      var s = Trie.empty<Nat, Proposal>();
-      for (proposal in arr.vals()) {
-          s := Trie.put(s, proposal_key(proposal.id), Nat.equal, proposal).0;
-      };
-      s // return
+  public func account_key(t : Principal) : Trie.Key<Principal> = {
+    key = t;
+    hash = Principal.hash t;
   };
-  
+  public func accounts_fromArray(arr : [Account]) : Trie.Trie<Principal, Tokens> {
+    var s = Trie.empty<Principal, Tokens>();
+    for (account in arr.vals()) {
+      s := Trie.put(s, account_key(account.owner), Principal.equal, account.tokens).0;
+    };
+    s;
+  };
+  public func proposals_fromArray(arr : [Proposal]) : Trie.Trie<Nat, Proposal> {
+    var s = Trie.empty<Nat, Proposal>();
+    for (proposal in arr.vals()) {
+      s := Trie.put(s, proposal_key(proposal.id), Nat.equal, proposal).0;
+    };
+    s // return
+  };
+
   public let oneToken = { amount_e8s = 10_000_000 };
-  public let zeroToken = { amount_e8s = 0 };  
-}
+  public let zeroToken = { amount_e8s = 0 };
+};
